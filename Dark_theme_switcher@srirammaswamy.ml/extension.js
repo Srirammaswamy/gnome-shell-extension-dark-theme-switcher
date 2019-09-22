@@ -4,7 +4,19 @@ const Gio = immports.gi.Gio;
 const Main = imports.ui.main;
 const Tweener = imports.ui.tweener;
 
+const DESKTOP_SCHEMA_KEY = 'org.gnome.desktop.interface';
+const SHELL_SCHEMA_KEY = 'org.gnome.shell.extensions.user-theme';
+const THEME_KEY = 'gtk-theme';
+const SHELL_KEY = 'name';
+const ICON_KEY = 'icon-theme';
+const LIGHT_THEME = 'McOS-CTLina';
+const DARK_THEME =  'Mc-OS-CTLina-Dark';
+const DARK_ICON = 'Os-Catalina-Night';
+const LIGHT_SHELL = 'McOS-CTLina';
+const DARK_SHELL = 'Mc-OS-CTLina-Dark';
+
 let text, button;
+let desktop_settings, shell_settings;
 
 function _hideHello() {
     Main.uiGroup.remove_actor(text);
@@ -43,6 +55,8 @@ function init() {
 
     button.set_child(icon);
     button.connect('button-press-event', _showHello);
+    desktop_settings = new Gio.Settings({ schema: DESKTOP_SCHEMA_KEY });
+    shell_settings   = new Gio.Settings({ schema: SHELL_SCHEMA_KEY });
     setLightTheme();
 }
 
