@@ -1,5 +1,6 @@
 
 const St = imports.gi.St;
+const Gio = immports.gi.Gio;
 const Main = imports.ui.main;
 const Tweener = imports.ui.tweener;
 
@@ -12,7 +13,7 @@ function _hideHello() {
 
 function _showHello() {
     if (!text) {
-        text = new St.Label({ style_class: 'helloworld-label', text: "Hello, world!" });
+        text = new St.Label({ style_class: 'display-label', text: "Light mode enabled" });
         Main.uiGroup.add_actor(text);
     }
 
@@ -37,11 +38,30 @@ function init() {
                           x_fill: true,
                           y_fill: false,
                           track_hover: true });
-    let icon = new St.Icon({ icon_name: 'system-run-symbolic',
+    let icon = new St.Icon({ icon_name: 'weather-clear-night-symbolic',
                              style_class: 'system-status-icon' });
 
     button.set_child(icon);
     button.connect('button-press-event', _showHello);
+    setLightTheme();
+}
+
+function setLightTheme() {
+
+}
+
+function setDarkTheme() {
+
+}
+
+function getCurrentTheme() {
+
+}
+
+function toggleTheme() {
+    getCurrentTheme === LIGHT
+      ? setDarkTheme();
+      : setLightTheme();
 }
 
 function enable() {
