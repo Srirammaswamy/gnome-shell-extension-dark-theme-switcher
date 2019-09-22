@@ -1,6 +1,6 @@
 
 const St = imports.gi.St;
-const Gio = immports.gi.Gio;
+const Gio = imports.gi.Gio;
 const Main = imports.ui.main;
 const Tweener = imports.ui.tweener;
 
@@ -15,18 +15,20 @@ const LIGHT_ICON = 'Os-Catalina-icons';
 const DARK_ICON = 'Os-Catalina-Night';
 const LIGHT_SHELL = 'McOS-CTLina';
 const DARK_SHELL = 'Mc-OS-CTLina-Dark';
+const LIGHT_TEXT = '🌞️ Light mode enabled :)';
+const DARK_TEXT = '🌜️ Dark mode enabled ;)';
 
-let text, button;
+let text, button, textValue;
 let desktop_settings, shell_settings;
 
-function _hideHello() {
+function _hideText() {
     Main.uiGroup.remove_actor(text);
     text = null;
 }
 
-function _showHello() {
+function _showText() {
     if (!text) {
-        text = new St.Label({ style_class: 'display-label', text: "Light mode enabled" });
+        text = new St.Label({ style_class: 'display-label', text: textValue });
         Main.uiGroup.add_actor(text);
     }
 
@@ -41,7 +43,7 @@ function _showHello() {
                      { opacity: 0,
                        time: 2,
                        transition: 'easeOutQuad',
-                       onComplete: _hideHello });
+                       onComplete: _hideText });
 }
 
 function init() {
@@ -54,8 +56,9 @@ function init() {
     let icon = new St.Icon({ icon_name: 'weather-clear-night-symbolic',
                              style_class: 'system-status-icon' });
 
+    textValue = LIGHT_TEXT;
     button.set_child(icon);
-    button.connect('button-press-event', _showHello);
+    button.connect('button-press-event', toggleTheme);
     desktop_settings = new Gio.Settings({ schema: DESKTOP_SCHEMA_KEY });
     shell_settings   = new Gio.Settings({ schema: SHELL_SCHEMA_KEY });
     setLightTheme();
@@ -65,12 +68,16 @@ function setLightTheme() {
     desktop_settings.set_string(THEME_KEY, LIGHT_THEME);
     desktop_settings.set_string(ICON_KEY, LIGHT_ICON);
     shell_settings.set_string(SHELL_KEY, LIGHT_SHELL);
+    textValue = LIGHT_TEXT;
+    _showText();
 }
 
 function setDarkTheme() {
     desktop_settings.set_string(THEME_KEY, DARK_THEME);
     desktop_settings.set_string(ICON_KEY, DARK_ICON);
-    shell_settings.set_string(SHELL_KEY, DARK_SHELL);    
+    shell_settings.set_string(SHELL_KEY, DARK_SHELL);
+    textValue = DARK_TEXT;
+    _showText();    
 }
 
 function getCurrentTheme() {
@@ -88,7 +95,7 @@ function getCurrentTheme() {
 
 function toggleTheme() {
     getCurrentTheme() === "light"
-      ? setDarkTheme();
+      ? setDarkTheme()
       : setLightTheme();
 }
 
