@@ -11,6 +11,7 @@ const SHELL_KEY = 'name';
 const ICON_KEY = 'icon-theme';
 const LIGHT_THEME = 'McOS-CTLina';
 const DARK_THEME =  'Mc-OS-CTLina-Dark';
+const LIGHT_ICON = 'Os-Catalina-icons';
 const DARK_ICON = 'Os-Catalina-Night';
 const LIGHT_SHELL = 'McOS-CTLina';
 const DARK_SHELL = 'Mc-OS-CTLina-Dark';
@@ -61,19 +62,32 @@ function init() {
 }
 
 function setLightTheme() {
-
+    desktop_settings.set_string(THEME_KEY, LIGHT_THEME);
+    desktop_settings.set_string(ICON_KEY, LIGHT_ICON);
+    shell_settings.set_string(SHELL_KEY, LIGHT_SHELL);
 }
 
 function setDarkTheme() {
-
+    desktop_settings.set_string(THEME_KEY, DARK_THEME);
+    desktop_settings.set_string(ICON_KEY, DARK_ICON);
+    shell_settings.set_string(SHELL_KEY, DARK_SHELL);    
 }
 
 function getCurrentTheme() {
+    let theme = desktop_settings.get_string(THEME_KEY);
+    let icon  = desktop_settings.get_string(ICON_KEY);
+    let shell = shell_settings.get_string(SHELL_KEY);
 
+    if(theme === LIGHT_THEME && icon === LIGHT_ICON && shell === LIGHT_SHELL)
+        return "light";
+    if(theme === DARK_THEME  && icon === DARK_ICON  && shell === DARK_SHELL )
+        return "dark";
+    setLightTheme();
+    return "light";  
 }
 
 function toggleTheme() {
-    getCurrentTheme === LIGHT
+    getCurrentTheme() === "light"
       ? setDarkTheme();
       : setLightTheme();
 }
