@@ -1,1 +1,11 @@
-{"name": "Dark theme switcher", "description": "Switch between light/dark theme, themes can be manually selected by user, scheduling (with respect to time) option is also available", "uuid": "Dark_theme_switcher@srirammaswamy.ml", "shell-version": ["3.32.2"]}
+{
+	"name": "Dark theme switcher", 
+	"description": "Switch between light/dark theme, themes can be manually selected by user, scheduling (with respect to time) option is also available", 
+	"shell-version": [
+		"3.32.2"
+	],
+	"url": "",
+	"uuid": "Dark_theme_switcher@srirammaswamy.ml", 
+	"developer": "Sriram",
+	"version": 0.3
+}
